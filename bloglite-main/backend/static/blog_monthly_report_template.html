@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>User Report</title>
+    <meta name="description" content="User Report"> 
+    <style type="text/css">
+        @page {
+          @top-left {
+            background: #e0ebea;
+            content: counter(page);
+            height: 1cm;
+            text-align: center;
+            width: 1cm;
+          }
+          @top-center {
+            background: #cff4fc;
+            content: '';
+            display: block;
+            height: .05cm;
+            opacity: .5;
+            width: 100%;
+          }
+          @top-right {
+            content: string(heading);
+            font-size: 9pt;
+            height: 1cm;
+            vertical-align: middle;
+            width: 100%;
+          }
+        }
+
+        @page :first {
+          background-size: cover;
+          margin: 0;
+        }
+
+        @page chapter {
+          background:#a0ebeb;
+          margin: 0;
+          @top-left { content: none }
+          @top-center { content: none }
+          @top-right { content: none }
+        }
+
+        html {
+          color: #393939;
+          font-family: "Noto sans", sans-serif;
+          font-size: 11pt;
+          font-weight: 300;
+          line-height: 1.5;
+        }
+        #cover table{
+
+            color: #073b8a;
+            margin: 5cm 2cm 0 2cm;
+            font-size: 30pt;
+            width: 100%;
+        }
+        h1 {
+          color: #320b70 ;
+          font-size: 38pt;
+          margin: 5cm 2cm 0 2cm;
+          page: no-chapter;
+          width: 100%;
+        }
+        h2, h3, h4 {
+          font-weight: 400;
+          margin: 5cm 2cm 0 2cm;
+          page: no-chapter;
+          width: 100%;
+        }
+        h2 {
+        
+          color: #073b8a;
+          break-before: always;
+          font-size: 28pt;
+          string-set: heading content();
+        }
+        h3 {
+          font-weight: 300;
+          font-size: 15pt;
+        }
+        h4 {
+          font-size: 13pt;
+        }
+
+        #cover {
+          align-content: center;
+          display: flex;
+          flex-wrap: wrap;
+          height: 297mm;
+        }
+
+        #cover footer {
+          background:  #79097050;;
+          flex: 1 50%;
+          margin: 0px;
+          padding: 1cm 0;
+          padding-left: 3cm;
+        }
+
+
+        #contents {
+          break-after: left;
+        }
+
+        #contents h5 {
+          font-size: 13pt;
+          text-align: justify;
+          padding: 0cm 1cm;
+          font-weight: 400;
+          margin-bottom: 1cm;
+        }
+        #contents h3::before {
+          background: #79096f;
+          content: '';
+          display: block;
+          height: .08cm;
+          margin-bottom: .15cm;
+          width: 10cm;
+        }
+
+        #contents h3::after {
+          background: #79096f;
+          content: '';
+          display: block;
+          height: .08cm;
+          margin-top: .15cm;
+          margin-bottom: .15cm;
+          width: 10cm;
+        }
+
+
+        
+    </style>  
+</head>
+<body>
+    <article id="cover">
+          <h1>{{data['username']}}'s Blogs</h1>
+          <table>
+            <tr>
+                  <td>Total Blogs</td>
+                  <td>{{data['no_blogs']}}</td>
+                 
+              </tr>
+              <tr>
+                  <td>Followers</td>
+                  <td>{{data['no_followers']}}</td>
+                  
+              </tr>
+              <tr>
+                  <td>Following </td>
+                  <td>{{data['no_following']}}</td>
+               
+              </tr>
+              <tr>
+                
+              </tr>
+          
+      </table>
+     
+      <footer>
+            {{data['username']}} | {{data['email']}}           
+     </footer> 
+    </article>
+  
+    <article id="contents">
+      <h3>
+          {{ data["message"] }}  
+      </h3>  
+        <img src="{{ data["figure"] }}"
+           alt="{{ data["figure"] }}"
+           style="height: 8cm; width:15cm;"/>
+
+        {% for eachblog in data['blogs'] %}
+        
+          <h3>
+            {{eachblog["blog_name"]}}
+          </h3>
+          <br>
+          <br>
+          <img src="{{eachblog["image_loc"]}}"
+           alt="{{eachblog["image_loc"]}}"
+           style="height: 8cm; width:15cm;"/>
+          <h5>
+            {{eachblog["description"]}}
+          </h5>
+          <h5 style="text-align: end;">
+            Uploaded on - {{eachblog["uploaded_on"]}}
+            <br>
+            Last updated on - {{eachblog["last_updated_on"]}}
+          </h5>
+        {% endfor %}
+    
+    </article>    
+</body>
+</html>

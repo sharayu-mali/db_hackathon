@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>User Report</title>
+    <meta name="description" content="User Report"> 
+    <style type="text/css">
+        @page {
+          @top-left {
+            background: #e0ebea;
+            content: counter(page);
+            height: 1cm;
+            text-align: center;
+            width: 1cm;
+          }
+          @top-center {
+            background: #cff4fc;
+            content: '';
+            display: block;
+            height: .05cm;
+            opacity: .5;
+            width: 100%;
+          }
+          @top-right {
+            content: string(heading);
+            font-size: 9pt;
+            height: 1cm;
+            vertical-align: middle;
+            width: 100%;
+          }
+        }
+
+        @page :first {
+          background-size: cover;
+          margin: 0;
+        }
+
+        @page chapter {
+          background:#a0ebeb;
+          margin: 0;
+          @top-left { content: none }
+          @top-center { content: none }
+          @top-right { content: none }
+        }
+        #cover {
+          align-content: center;
+          display: flex;
+          flex-wrap: wrap;
+          height: 297mm;
+        }
+
+        html {
+          color: #393939;
+          font-family: "Noto sans", sans-serif;
+          font-size: 11pt;
+          font-weight: 300;
+          line-height: 1.5;
+          margin-left: 1.5cm;
+          margin-right: 1.5cm;
+        }
+        h1 {
+          color: #320b70 ;
+          font-size: 30pt;
+          margin: 5cm 2cm 0 2cm;
+          page: no-chapter;
+          width: 100%;
+        }
+        h2, h3, h4 {
+          font-weight: 400;
+          page: no-chapter;
+          width: 100%;
+        }
+        h2 {        
+          color: #073b8a;
+        }
+        h3 {
+          font-weight: 300;
+          font-size: 22pt;
+        }
+        h4 {
+            text-align: justify;
+          font-weight: 400;
+          font-size: 18pt;
+        }
+        h5 {
+        text-align: justify;
+          font-size: 13pt;
+        }
+
+      
+       h3::before {
+          background: #79096f;
+          content: '';
+          display: block;
+          height: .08cm;
+          margin-bottom: .15cm;
+          width: 10cm;
+        }
+
+       h3::after {
+          background: #79096f;
+          content: '';
+          display: block;
+          height: .08cm;
+          margin-top: .15cm;
+          margin-bottom: 3cm;
+          width: 10cm;
+        }
+
+
+        
+    </style>  
+</head>
+<body>
+    <article id="cover">
+        {% for eachblog in data['blogs'] %}        
+          <h3>
+            {{eachblog["blog_name"]}}
+          </h3>      
+          <img src="{{eachblog["image_loc"]}}"
+           alt="{{eachblog["image_loc"]}}"
+           style="height: 8cm; width:15cm;"/>
+          <h4>
+            {{eachblog["description"]}}
+          </h4>
+          <br>
+          <br>
+          
+          <h5>
+            Uploaded on - {{eachblog["uploaded_on"]}}
+            <br>
+            Last updated on - {{eachblog["last_updated_on"]}}
+            <br>
+            Likes- {{eachblog["likes"]}}
+          </h5>
+        {% endfor %}
+          
+    </article>    
+
+</body>
+</html>
