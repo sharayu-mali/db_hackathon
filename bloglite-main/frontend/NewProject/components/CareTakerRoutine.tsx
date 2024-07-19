@@ -1,24 +1,40 @@
+import Constants from 'expo-constants';
+import { ScrollViewStyleReset } from 'expo-router/html';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View , Button, Alert} from 'react-native';
-import axios from 'axios'
+import { StyleSheet, Text, TextInput, View , Button, Alert, ScrollView, Switch} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
+
+ export const CareTakerRoutine = () => {
+  const [username, setUsername] = useState  ('');
+  const [isEnabled, toggleSwitch] = useState(false);
 
 
- export const CurrentRoutine= () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    //  function toggleSwitch(value: boolean): void | Promise<void> {
+    //     //  throw new Error('Function not implemented.');
+    //  }
 
-
-
-  
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Routine</Text>
+        
+        <View style={styles.navbar}>
+        <Icons name="information-circle" size={30} color={'#585484'} />
+        <Icons name="alert-circle" size={30} color={'#9c1919'}/>
+        </View>
+
+      <Text style={styles.title}>Track Patient Routine</Text>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Search Patient"
+        onChangeText={setUsername}
+        value={username}
+      />
 
         <View style={styles.main}>
         <Text style={styles.label}>Daliy Tasks</Text>
-        <Icons name='add-circle' size={30} color={'white'}/>
-
+        <Icons name='add-circle' size={30} color={'black'}/>
         </View>
      
         <View style={styles.routinelist}>
@@ -62,22 +78,42 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     paddingHorizontal: 20,
     paddingVertical: 50,
-    backgroundColor:'#585484',
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 10,
-    color:'white',
 
+  },
+  navbar:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'flex-end',
+    gap:13,
+    marginTop:10,
+    marginBottom:30,
+  }, 
+  location:{
+    fontSize:18,
+  },
+  input: {
+    height: 50,
+    borderColor: 'gray',
+    borderRadius:9,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    marginTop:40
+  },
+  output: {
+    fontSize: 18,
   },
   title: {
     fontSize: 33,
-    fontWeight: 'bold',
-    textAlign:'center',
-    marginBottom:50,
-    color:'white',
+    fontWeight: '400',
+    justifyContent:'center',
   },
-  main:{
+  mapmain:{
+    width:370,
+    height:200,
+    backgroundColor:'gray',
+    marginTop:10
+  },  main:{
     display:'flex',
     flexDirection:'row',
     justifyContent:'space-between',
@@ -99,16 +135,21 @@ const styles = StyleSheet.create({
 
   },
   routinedetailscontainer:{
-    backgroundColor:'#f8ecfc',
+    backgroundColor:'#585484',
     justifyContent:'center',
     borderRadius:9,
     width:270,
     padding:10,
   },
+  
+  label: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
   routinelabel:{
-    fontSize:16,
-    color:'black'
+    color:'white',
+    fontSize: 18,
   }
 });
 
-export default CurrentRoutine;
+export default CareTakerRoutine;
