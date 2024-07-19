@@ -19,11 +19,11 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
     <View style={styles.container}>
         
         <View style={styles.navbar}>
-        <Icons name="information-circle" size={30} color={'blue'} />
-        <Icons name="alert-circle" size={30} color={'red'}/>
+        <Icons name="information-circle" size={30} color={'#4844b4'} />
+        <Icons name="alert-circle" size={30} color={'#9c1919'}/>
         </View>
 
-      <Text style={styles.username}>Hello, Rakshanda !</Text>
+      <Text style={styles.username}>Hello, John !</Text>
       <Text style={styles.greeting}>Goodmornig</Text>
 
 
@@ -49,7 +49,7 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                   />
-                <Text style={styles.tasklabel}>Going Out ljnvjldfnljn?</Text>
+                <Text style={styles.tasklabel}>Medicine</Text>
             </View>
 
             <View style={styles.task}>
@@ -60,7 +60,7 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
                         onValueChange={toggleSwitch}
                         value={isEnabled}
                       />
-                <Text style={styles.tasklabel}>Going Out ljnvjldfnljn?</Text>
+                <Text style={styles.tasklabel}>Evening Snacks</Text>
 
             </View>
 
@@ -72,7 +72,7 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
                         onValueChange={toggleSwitch}
                         value={isEnabled}
                       />
-                <Text style={styles.tasklabel}>Going Out ljnvjldfnljn?</Text>
+                <Text style={styles.tasklabel}>Study React</Text>
 
             </View>
 
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   task:{
     width:300,
     height:95,
-    backgroundColor:'pink',
+    backgroundColor:'#7874cc',
     display:'flex',
     flexDirection:'row',
     textAlign:'center',
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
   taskprogress:{
     height:20,
     width:83,
-    backgroundColor:'blue',
+    backgroundColor:'#4844b4',
     borderRadius:23,
   },
   taskmain:{
@@ -214,13 +214,13 @@ const styles = StyleSheet.create({
     marginTop:25
   },
   statisticsmain:{
-    backgroundColor:'green',
+    // backgroundColor:'green',
     display:'flex',
     flexDirection:'row',
     gap:20,
   },
   statisticscontainer:{
-    backgroundColor:'cyan',
+    backgroundColor:'#d6d6d6',
     height:110,
     width:110,
     borderRadius:13,

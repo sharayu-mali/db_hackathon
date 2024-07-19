@@ -72,12 +72,12 @@ import axios from 'axios'
         value={password}
       />
 
-<Text style={styles.output}>You entered: {username}</Text>
-      <Text style={styles.output}>You entered: {password}</Text>
+{/* <Text style={styles.output}>You entered: {username}</Text>
+      <Text style={styles.output}>You entered: {password}</Text> */}
 
       <Button
         title="Press me"
-        color="#f194ff"
+        color="#4844b4"
         onPress={handlePress}
       />
     </View>

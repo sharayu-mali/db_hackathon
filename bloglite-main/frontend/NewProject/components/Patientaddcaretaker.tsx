@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 
- export const Patientsettings = () => {
+ export const Patientaddcaretaker = () => {
   const [username, setUsername] = useState  ('');
   const [isEnabled, toggleSwitch] = useState(false);
 
@@ -18,25 +18,33 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
   return (
     
     <View style={styles.container}>
-    <Image
-        source={require('../assets/images/patient.jpg')}
-        style={styles.image}
+    <Text style={styles.title}>Add Care Taker</Text>
+     
+      <TextInput
+        style={styles.input}
+        placeholder="Search Care Taker"
+        onChangeText={setUsername}
+        value={username}
       />
-    <Text style={styles.title}>Damon</Text>
-      <View style={styles.menu}>
-          <Text style={styles.label}>Care Taker</Text>
-          <Icons name="add-circle" size={30} color={'black'}/>
-      </View>
 
       <View style={styles.caretakerlist}>
                 <View style={styles.caretakerdetails}>
                     <Text style={styles.name}>Elena</Text>
+                    <View style={styles.iconmain}>
+                    <Icons name="add-circle" size={27} color={'white'}/>
+                    </View>
                 </View>
                 <View style={styles.caretakerdetails}>
-                    <Text style={styles.name}>Elena</Text>
+                    <Text style={styles.name}>Klaus</Text>
+                    <View style={styles.iconmain}>
+                    <Icons name="add-circle" size={27} color={'white'}/>
+                    </View>
                 </View>
                 <View style={styles.caretakerdetails}>
-                    <Text style={styles.name}>Elena</Text>
+                    <Text style={styles.name}>Rakzz</Text>
+                    <View style={styles.iconmain}>
+                    <Icons name="add-circle" size={27} color={'white'}/>
+                    </View>
                 </View>
         </View>
     </View>
@@ -52,7 +60,7 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     alignItems:'center',
     paddingHorizontal: 20,
-    paddingVertical: 50,
+    paddingVertical: 20,
   },
   menu:{
     // backgroundColor:'pink',
@@ -78,24 +86,41 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: '500',
     textAlign:'center',
-    marginTop:20
   },
   caretakerlist:{
-    marginTop:13,
+    marginTop:33,
     gap:12, 
   },
   caretakerdetails:{
     backgroundColor:'#585484',
     width:370,
     height:60,
-    justifyContent:'center',
+    justifyContent:'space-between',
     paddingLeft:10,
     borderRadius:9,
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    paddingHorizontal:10,
   },
   name:{
     fontSize:16,
     color:'white'
+  },
+  input: {
+    height: 50,
+    borderColor: 'gray',
+    borderRadius:9,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginTop:50,
+    width:370,
+  },
+  iconmain:{
+    display:'flex',
+    flexDirection:'row',
+    gap:8
   }
 });
 
-export default Patientsettings;
+export default Patientaddcaretaker;

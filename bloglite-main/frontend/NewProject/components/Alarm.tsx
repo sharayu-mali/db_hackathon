@@ -14,7 +14,7 @@ export const Alarm = () => {
       <Text style={styles.routine}>07:00</Text>
       <Text style={styles.routine}>Breakfast</Text>
 
-      <Icons name="information-circle" size={130} color={'blue'} style={styles.emojie}/>
+      <Icons name="information-circle" size={130} color={'#4844b4'} style={styles.emojie}/>
 
 
       <TouchableOpacity style={styles.button} onPress={handlePress}>
@@ -51,13 +51,14 @@ const styles = StyleSheet.create({
   button:{
     width:200,
     height:70,
-    backgroundColor:'gray',
+    backgroundColor:'black',
     justifyContent:'center',
     alignItems:'center',
     borderRadius:9,
   },
   buttontext:{
     fontSize:23,
+    color:'white',
   }
 });
 

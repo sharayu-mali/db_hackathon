@@ -4,7 +4,7 @@ import axios from 'axios'
 import Icons from 'react-native-vector-icons/Ionicons';
 // import DatePicker from 'react-native-date-picker'
 
-export const CreateRoutine = () => {
+export const CareTakerAddRoutine = () => {
     const [routinename, setRoutineName] = useState('');
     const [password, setPassword] = useState('');
     
@@ -41,13 +41,13 @@ export const CreateRoutine = () => {
       />
 
 {/* <DatePicker date={date} onDateChange={setDate} /> */}
-        
-{/* <Text style={styles.output}>You entered: {routinename}</Text>
+{/*         
+<Text style={styles.output}>You entered: {routinename}</Text>
       <Text style={styles.output}>You entered: {password}</Text> */}
 
       <Button
         title="Create Routine"
-        color="#4844b4"
+        color="#585484"
         onPress={handlelogin}
       />
 
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateRoutine;
+export default CareTakerAddRoutine;
