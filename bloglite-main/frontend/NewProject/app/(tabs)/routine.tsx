@@ -10,8 +10,8 @@ export default function HomeScreen() {
   return (
     
     // <CurrentRoutine/>
-    <CreateRoutine/>
-    // <Alarm/>
+    // <CreateRoutine/>
+    <Alarm/>
     
   );
 };

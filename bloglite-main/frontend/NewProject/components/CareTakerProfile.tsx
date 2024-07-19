@@ -3,10 +3,10 @@ import { ScrollViewStyleReset } from 'expo-router/html';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View , Button, Alert, ScrollView, Switch, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icons from 'react-native-vector-icons/Ionicons';
+import Icons from 'react-native-vector-icons/Entypo';
 import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
 
- export const Patientsettings = () => {
+ export const CareTakerProfile = () => {
   const [username, setUsername] = useState  ('');
   const [isEnabled, toggleSwitch] = useState(false);
 
@@ -24,12 +24,11 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
       />
     <Text style={styles.title}>Damon</Text>
       <View style={styles.menu}>
-          <Text style={styles.label}>Care Taker</Text>
-          <Icons name="add-circle" size={30} color={'black'}/>
+          <Text style={styles.label}>Patients</Text>
       </View>
 
       <View style={styles.caretakerlist}>
-                <View style={styles.caretakerdetails}>
+      <View style={styles.caretakerdetails}>
                     <Text style={styles.name}>Elena</Text>
                 </View>
                 <View style={styles.caretakerdetails}>
@@ -37,6 +36,24 @@ import { isEnabled } from 'react-native/Libraries/Performance/Systrace';
                 </View>
                 <View style={styles.caretakerdetails}>
                     <Text style={styles.name}>Elena</Text>
+                    <View style={styles.iconmain}>
+                    <Icon name="check-circle" size={27} color={'white'}/>
+                    <Icons name="circle-with-cross" size={27} color={'white'}/>
+                    </View>
+                </View>
+                <View style={styles.caretakerdetails}>
+                    <Text style={styles.name}>Elena</Text>
+                    <View style={styles.iconmain}>
+                    <Icon name="check-circle" size={27} color={'white'}/>
+                    <Icons name="circle-with-cross" size={27} color={'white'}/>
+                    </View>
+                </View>
+                <View style={styles.caretakerdetails}>
+                    <Text style={styles.name}>Elena</Text>
+                    <View style={styles.iconmain}>
+                    <Icon name="check-circle" size={27} color={'white'}/>
+                    <Icons name="circle-with-cross" size={27} color={'white'}/>
+                    </View>
                 </View>
         </View>
     </View>
@@ -76,7 +93,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 23,
-    fontWeight: '500',
+    fontWeight: '400',
     textAlign:'center',
     marginTop:20
   },
@@ -88,14 +105,23 @@ const styles = StyleSheet.create({
     backgroundColor:'#585484',
     width:370,
     height:60,
-    justifyContent:'center',
+    display:'flex',
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'space-between',
     paddingLeft:10,
     borderRadius:9,
+    paddingHorizontal:20,
   },
   name:{
     fontSize:16,
-    color:'white'
+    color:'white',
+  },
+  iconmain:{
+    display:'flex',
+    flexDirection:'row',
+    gap:8
   }
 });
 
-export default Patientsettings;
+export default CareTakerProfile;
