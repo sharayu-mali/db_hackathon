@@ -3,14 +3,14 @@ from datetime import datetime
 from flask_security import UserMixin,RoleMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
-roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('Caretaker.id')))    
+# roles_users = db.Table('roles_users',
+#         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+#         db.Column('role_id', db.Integer(), db.ForeignKey('Caretaker.id')))    
 
 
-followers = db.Table('followers',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('follow_id', db.Integer(), db.ForeignKey('user.id')))  
+# followers = db.Table('followers',
+#         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+#         db.Column('follow_id', db.Integer(), db.ForeignKey('user.id')))  
 
 class UserPatient(db.Model, UserMixin):
     __tablename__ = 'UserPatient'
@@ -21,8 +21,8 @@ class UserPatient(db.Model, UserMixin):
     location = db.Column(db.String, unique=False)
     phone = db.Column(db.String, unique=False)
     password = db.Column(db.String(255))
-    created_on = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)   
-    db.relationship('UserPatient', secondary=followers,backref=db.backref('UserPatient', lazy='dynamic'))
+    created_on = db.Column(db.DateTime, nullable=False, default=datetime.now)   
+    caretaker_id = db.Column(db.Integer,   db.ForeignKey("Caretaker.caretaker_id"), nullable=True)
     
     def verify_password(self, pwd):
         
@@ -39,17 +39,18 @@ class Caretaker(db.Model, RoleMixin):
 class Tasks(db.Model):
     __tablename__ = 'Tasks'
     task_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
-    user_id = db.Column(db.Integer,   db.ForeignKey("UserPatient.id"), nullable=False)
+    user_id = db.Column(db.Integer,   db.ForeignKey("UserPatient.user_id"), nullable=False)
     time = db.Column(db.DateTime, unique=True,nullable=False)
     emoji = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(80), unique=True)
-    Contacts = db.relationship('Contacts', backref=db.backref('Tasks'),cascade="all,delete", passive_deletes=True)
+    # Contacts = db.relationship('Contacts', backref=db.backref('Tasks'),cascade="all,delete", passive_deletes=True)
 
 
 class Contacts(db.Model):
     __tablename__ = 'Acquaintances'
-    acquaintances_id = db.Column(db.String(80),   db.ForeignKey("UserPatient.id"), primary_key=True, nullable=False)
+    acquaintances_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
     name = db.Column(db.String(80), nullable=False)
     acquaintances_pic = db.Column(db.String(80), unique=True)
-    relation = db.Column(db.String(80), unique=False)
+    relation = db.Column(db.String(80), unique=False)    
+    user_id = db.Column(db.Integer,   db.ForeignKey("UserPatient.user_id"), nullable=False)
 

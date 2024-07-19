@@ -1,4 +1,5 @@
 import os
+from urllib.parse import quote_plus
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config():
@@ -12,7 +13,24 @@ class Config():
 
 class LocalDevelopmentConfig(Config):
     SQLITE_DB_DIR = os.path.join(basedir, "../db_directory")
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(SQLITE_DB_DIR, "database.sqlite3")
+    # config = dotenv_values("./.env")
+    # username = config.get("DATABASE_USERNAME")
+    # password = config.get("DATABASE_PASSWORD")
+    # dbname = config.get("DATABASE_NAME")
+    # port = config.get("DATABASE_PORT")
+    # host = config.get("DATABASE_HOST")
+
+    # engine = create_engine(f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{dbname}", echo=True)
+    # connection = engine.connect()
+    DATABASE_USERNAME="postgres.mjalrxdxkhlrkqdhjkjh"
+    DATABASE_PASSWORD="Dementia123Hack"
+    DATABASE_NAME="postgres"
+    DATABASE_PORT="6543"
+    DATABASE_HOST="http://aws-0-ap-south-1.pooler.supabase.com"
+    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(SQLITE_DB_DIR, "database.sqlite3")
+    # SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{DATABASE_USERNAME}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"% quote_plus(DATABASE_PASSWORD)
+    SQLALCHEMY_DATABASE_URI="postgresql://postgres.ogsieebvavdcpvbrdaav:Dementia123Hack@aws-0-ap-south-1.pooler.supabase.com:6543/postgres"
+    # SQLALCHEMY_DATABASE_URI="postgresql://postgres.mjalrxdxkhlrkqdhjkjh:Dementia123Hack@aws-0-ap-south-1.pooler.supabase.com:6543/postgres"
     DEBUG = True
     SECRET_KEY =  "ash ah secet"
     SECURITY_PASSWORD_HASH = "bcrypt"    
