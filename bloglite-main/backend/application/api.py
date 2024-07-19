@@ -13,19 +13,21 @@ import os
 
 response_fields = {
 
-    "user_id" : fields.String,
-    "email": fields.String,
-    "dob": fields.Integer,
-    "location": fields.Integer,
-    "phone": fields.Integer,
-    "password": fields.Integer,
-    "username": fields.Integer,
+    "user_id": fields.String,
+    "username": fields.String,
+    "email": fields.String,    
+    "location":  fields.String,
+    "phone":  fields.String,    
+    "password":  fields.String,
+    "dob": fields.String,
+    "caretaker_id": fields.Integer,
+    "created_on": fields.DateTime(dt_format='iso8601'),
    
    
 }
 delete_response_fields = {
 
-    "user_id" : fields.String  
+    "message" : fields.String  
    
 }
 
@@ -58,18 +60,22 @@ user_response_fields = {
 
 class UserPatientAPI(Resource):
     
-    @marshal_with(user_fields)
-    # @auth_required("token")
+    @marshal_with(user_response_fields)
+    # #@auth_required("token")
     def get(self,user_id=None):
         # Default to 200 OK
         if user_id!=None:
             print(user_id)
             data=db.session.query(UserPatient).filter_by(user_id=user_id).first()
             print(data)
-            return data,200
+            return {"users":data},200
+        else:
+            data=db.session.query(UserPatient).all()
+            return {"users":data},200
+        
 
         
-    # @auth_required("token")
+    # #@auth_required("token")
     @marshal_with(response_fields)
     def post(self):
         args = user_parser.parse_args() 
@@ -87,7 +93,7 @@ class UserPatientAPI(Resource):
         db.session.commit()
 
         Msg={"message":"User Added"}
-        return Msg,200 
+        return add_user,200 
     
     @marshal_with(user_fields)
     def put(self):
@@ -124,7 +130,7 @@ class UserPatientAPI(Resource):
             
         return user,200
 
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(delete_response_fields)
     def delete(self, user_id):
         print("DELETE - ",user_id)
@@ -156,14 +162,14 @@ caretaker_parser.add_argument("description")
 caretaker_fields = {
     "caretaker_id" : fields.String,
     "name": fields.String,
-    "mobile": fields.Integer,
-    "caretaker_pic": fields.Integer,
-    "description": fields.Integer    
+    "mobile": fields.String,
+    "caretaker_pic": fields.String,
+    "description": fields.String    
 }
 
 delete_response_caretaker_fields = {
 
-    "caretaker_id" : fields.String
+    "message" : fields.String
    
 }
 class CaretakerAPI(Resource):
@@ -180,7 +186,7 @@ class CaretakerAPI(Resource):
                 return caretaker,200
         
     
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(caretaker_fields)
     def post(self):
         args = caretaker_parser.parse_args() 
@@ -204,7 +210,7 @@ class CaretakerAPI(Resource):
         
         return caretaker,200
 
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(delete_response_caretaker_fields)
     def delete(self,caretaker_id=None):
         # Default to 200 OK
@@ -226,11 +232,11 @@ Request Parsers and Output Resource Fields forTasksAPI
 
 tasks_parser = reqparse.RequestParser()
 
-tasks_parser.add_argument("task_id", location='form')
-tasks_parser.add_argument("user_id", location='form')
-tasks_parser.add_argument("time", location='form')
-tasks_parser.add_argument("emoji", location='form')
-tasks_parser.add_argument("description", location='form')
+tasks_parser.add_argument("task_id")
+tasks_parser.add_argument("user_id")
+tasks_parser.add_argument("time")
+tasks_parser.add_argument("emoji")
+tasks_parser.add_argument("description")
 
 task_resource_fields = {
     "task_id": fields.String,
@@ -242,12 +248,12 @@ task_resource_fields = {
     
 }
 delete_task_resource_fields = {
-    "task_id": fields.String,   
+    "message": fields.String,   
 }
 
-# class TasksAPI(Resource):
+class TasksAPI(Resource):
 
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(task_resource_fields)
     def get(self,user_id=None,task_id=None):
         # Default to 200 OK
@@ -256,8 +262,8 @@ delete_task_resource_fields = {
             if data is None:
                 raise BusinessValidationError(status_code=404, error_code="ERROR_U00", error_message="User not found")
                   
-#             else:
-#                 return data,200
+            else:
+                return data,200
     
     @marshal_with(task_resource_fields)
     def post(self):
@@ -267,15 +273,16 @@ delete_task_resource_fields = {
         time=args.get("time", None)
         emoji=args.get("emoji", None)
         description=args.get("description", None)
-
-        tasks = Tasks(task_id=task_id,user_id=user_id,time=time,emoji=emoji,description=description )
+        print("POST Task - ",args)
+        time=datetime.strptime(time, '%m/%d/%y %H:%M:%S')
+        tasks = Tasks(user_id=user_id,time=time,emoji=emoji,description=description )
         db.session.add(tasks)
         db.session.commit()
         Msg={"message":"User created successfully"}
-        return Msg,200 
+        return tasks,200 
 
 
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(delete_task_resource_fields)
     def delete(self,task_id=None):
         # Default to 200 OK
@@ -300,6 +307,7 @@ contact_parser.add_argument("acquaintances_id")
 contact_parser.add_argument("name")
 contact_parser.add_argument("acquaintances_pic")
 contact_parser.add_argument("relation")
+contact_parser.add_argument("user_id")
 
 delete_contact_resource_fields = {
     "acquaintances_id": fields.Integer,
@@ -307,15 +315,16 @@ delete_contact_resource_fields = {
 }
 contact_resource_fields = {
     "acquaintances_id": fields.Integer,
-    "name": fields.Integer,
-    "acquaintances_pic": fields.Integer,
-    "relation": fields.Integer,
+    "name": fields.String,
+    "acquaintances_pic": fields.String,
+    "relation": fields.String,
+    "user_id": fields.Integer
 }
 
-# class ContactsAPI(Resource):
+class ContactsAPI(Resource):
     
     @marshal_with(contact_resource_fields)
-    @auth_required("token")
+    #@auth_required("token")
     def get(self,acquaintances_id=None):
         # Default to 200 OK
         if acquaintances_id!=None:
@@ -327,7 +336,7 @@ contact_resource_fields = {
                 data=db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).all()
                 return data,200
         
-    @auth_required("token")
+    #@auth_required("token")
     @marshal_with(contact_resource_fields)
     def post(self):
         args = contact_parser.parse_args() 
@@ -335,32 +344,33 @@ contact_resource_fields = {
         name=args.get("name", None)
         acquaintances_pic=args.get("acquaintances_pic", None)
         relation=args.get("relation", None)
+        user_id  = args.get("user_id")
 
-        contact = db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first()   
-        if contact is None:
-            raise BusinessValidationError(status_code=404, error_code="ERROR_U00", error_message="Contact not found")
+        # contact = db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first()   
+        # if contact is None:
+        #     raise BusinessValidationError(status_code=404, error_code="ERROR_U00", error_message="Contact not found")
     
-        exists=db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first() is not None
-        if exists is not None:
-            raise BusinessValidationError(status_code=400, error_code="ERROR_U03", error_message="Contact already exists")
+        # exists=db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first() is not None
+        # if exists is not None:
+        #     raise BusinessValidationError(status_code=400, error_code="ERROR_U03", error_message="Contact already exists")
         
-        contact = Contacts(acquaintances_id=acquaintances_id, name=name, acquaintances_pic=acquaintances_pic,relation=relation  )
+        contact = Contacts(name=name, user_id=user_id,acquaintances_pic=acquaintances_pic,relation=relation  )
         db.session.add(contact)
         db.session.commit()
 
         Msg={"message":"Contact addeed successfully"}
-        return Msg,200 
+        return contact,200 
 
-    @auth_required("token")
-    @marshal_with(delete_contact_resource_fields)
-    def delete(self,acquaintances_id):
+    #@auth_required("token")
+    # @marshal_with(delete_contact_resource_fields)
+    # def delete(self,acquaintances_id):
 
-        contact = db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first()   
-        if contact is None:
-            raise BusinessValidationError(status_code=404, error_code="ERROR_U00", error_message="Contact not found")
-        contact = Contact(acquaintances_id=acquaintances_id)
-        db.session.delete(contact)
-        db.session.commit()      
-        Msg={"message":"Contact Deleted"}
-        return Msg,200 
+    #     contact = db.session.query(Contacts).filter_by(acquaintances_id=acquaintances_id).first()   
+    #     if contact is None:
+    #         raise BusinessValidationError(status_code=404, error_code="ERROR_U00", error_message="Contact not found")
+    #     contact = Contacts(acquaintances_id=acquaintances_id)
+    #     db.session.delete(contact)
+    #     db.session.commit()      
+    #     Msg={"message":"Contact Deleted"}
+    #     return Msg,200 
     

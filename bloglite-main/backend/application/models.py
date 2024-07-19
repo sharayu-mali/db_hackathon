@@ -32,17 +32,17 @@ class Caretaker(db.Model, RoleMixin):
     __tablename__ = 'Caretaker'
     caretaker_id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
-    mobile = db.Column(db.String(80), unique=True)
-    caretaker_pic = db.Column(db.String(80), unique=True)
+    mobile = db.Column(db.String(80))
+    caretaker_pic = db.Column(db.String(80))
     description = db.Column(db.String(255))
 
 class Tasks(db.Model):
     __tablename__ = 'Tasks'
     task_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
     user_id = db.Column(db.Integer,   db.ForeignKey("UserPatient.user_id"), nullable=False)
-    time = db.Column(db.DateTime, unique=True,nullable=False)
-    emoji = db.Column(db.String(80), unique=True)
-    description = db.Column(db.String(80), unique=True)
+    time = db.Column(db.DateTime,nullable=False)
+    emoji = db.Column(db.String(80))
+    description = db.Column(db.String(80))
     # Contacts = db.relationship('Contacts', backref=db.backref('Tasks'),cascade="all,delete", passive_deletes=True)
 
 
@@ -50,7 +50,7 @@ class Contacts(db.Model):
     __tablename__ = 'Acquaintances'
     acquaintances_id = db.Column(db.Integer, autoincrement=True, primary_key=True, nullable=False)
     name = db.Column(db.String(80), nullable=False)
-    acquaintances_pic = db.Column(db.String(80), unique=True)
+    acquaintances_pic = db.Column(db.String(80))
     relation = db.Column(db.String(80), unique=False)    
     user_id = db.Column(db.Integer,   db.ForeignKey("UserPatient.user_id"), nullable=False)
 

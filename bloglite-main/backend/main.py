@@ -85,8 +85,12 @@ from application.controllers import *
 # api.add_resource(FollowerAPI, "/api/followers/<int:user_id>", "/api/followers/<int:user_id>/<int:follow_id>","/api/followers")
 # api.add_resource(LikesAPI, "/api/likes/<int:blog_id>", "/api/likes/<int:blog_id>/<int:user_id>","/api/likes")
 
-from application.api import UserPatientAPI
+from application.api import UserPatientAPI,TasksAPI,CaretakerAPI,ContactsAPI
 api.add_resource(UserPatientAPI,"/api/userpatient/<int:user_id>","/api/userpatient")
+api.add_resource(TasksAPI,"/api/tasks/<int:user_id>/<int:task_id>","/api/tasks","/api/tasks/<int:task_id>")
+api.add_resource(CaretakerAPI,"/api/caretaker/<int:caretaker_id>","/api/caretaker/")
+api.add_resource(ContactsAPI,"/api/contacts/<int:acquaintances_id>","/api/contacts/")
+
 
 if __name__ == '__main__':
   # Run the Flask app
